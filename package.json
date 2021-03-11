@@ -1,0 +1,19 @@
+{
+  "name": "sweet-spot",
+  "version": "1.0.0",
+  "description": "SweetSpot calcualte how much to lose or gain",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yllndritb/sweet-spot.git"
+  },
+  "author": "Yllndrit Beka, Sőnfeld Álmos, Mekker Attila Tamás",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yllndritb/sweet-spot/issues"
+  },
+  "homepage": "https://github.com/yllndritb/sweet-spot#readme"
+}
