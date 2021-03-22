@@ -15,27 +15,27 @@ class SweetSpot {
   }
 
   get getBMI() {
-    return this.calcBMI();
+    return this.calcBMI().toFixed(2);
   }
 
   get getBMR() {
-    return this.calcBMR();
+    return this.calcBMR().toFixed(2);
   }
 
   get getIdealWeight() {
-    return this.calcIdealWeight();
+    return this.calcIdealWeight().toFixed(3);
   }
 
   get getExtraWeight() {
-    return this.calculateExtraWeight();
+    return this.calculateExtraWeight().toFixed(3);
   }
 
   get getMissingWeight() {
-    return this.calculateMissingWeight();
+    return this.calculateMissingWeight().toFixed(3);
   }
 
   get getBurnedCalories() {
-    return this.calculateBurnedCalories();
+    return Math.round(this.calculateBurnedCalories());
   }
 
   get getMonths() {
@@ -43,7 +43,7 @@ class SweetSpot {
   }
 
   get getDailyIntakeCalories() {
-    return this.calculateDailyIntakeCalories();
+    return Math.round(this.calculateDailyIntakeCalories());
   }
 
   calcBMI() {
@@ -82,6 +82,7 @@ class SweetSpot {
   calculateDailyIntakeCalories() {
     let burnedCaloriesInMonth = AVG_DAYS_IN_MONTH * this.getBurnedCalories;
     let deltaWeightCalories = (KG_IN_CALORIES * (!!this.getExtraWeight ? this.getExtraWeight : this.getMissingWeight)) / this.getMonths;
+    deltaWeightCalories = (!!this.isOverweight && !!deltaWeightCalories)?(-deltaWeightCalories):deltaWeightCalories;
     let totalCalories = burnedCaloriesInMonth + deltaWeightCalories;
     return !!totalCalories ? (burnedCaloriesInMonth + deltaWeightCalories) / AVG_DAYS_IN_MONTH : this.getBurnedCalories;
   }
