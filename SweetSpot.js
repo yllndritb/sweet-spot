@@ -4,8 +4,11 @@ const HEALTHY_GAIN_OVER_MONTH_KG = 3;
 const HEALTHY_LOSE_OVER_MONTH_KG = 5;
 const MIN_BMI = 18.5;
 const MAX_BMI = 24.9;
+const CALORIES_BURNED_RUNNING_PER_KG_IN_MINUTE = 0.21;
+const CALORIES_BURNED_CARDIO_PER_KG_IN_MINUTE = 0.11;
+const CALORIES_BURNED_WEIGHT_TRAINING_PER_KG_IN_MINUTE = 0.05;
 
-class SweetSpot {
+export default class SweetSpot {
   constructor(height, weight, age, gender, levelOfActivity) {
     this.height = height;
     this.weight = weight;
@@ -44,6 +47,26 @@ class SweetSpot {
 
   get getDailyIntakeCalories() {
     return Math.round(this.calculateDailyIntakeCalories());
+  }
+
+  
+  get getBurnedCaloriesBy30MinRunning() {
+    return Math.round(this.calcualteBurnedCaloriesBy30MinRunning());
+  }
+
+  
+  get getBurnedCaloriesBy30MinCardio() {
+    return Math.round(this.calcualteBurnedCaloriesBy30MinCardio());
+  }
+
+  
+  get getBurnedCaloriesBy30MinWeightTraining() {
+    return Math.round(this.calcualteBurnedCaloriesBy30MinWightTraining());
+  }
+
+  
+  get getExtraActivities() {
+    return Math.round(this.calcualteExtraActivites());
   }
 
   calcBMI() {
@@ -87,9 +110,23 @@ class SweetSpot {
     return !!totalCalories ? (burnedCaloriesInMonth + deltaWeightCalories) / AVG_DAYS_IN_MONTH : this.getBurnedCalories;
   }
 
-  calculateBurnedCalories() {
+  calculateBurnedCalories(workout=false,running=true,cardio=true,weight_training=true) {
+  if(!workout || this.levelOfActivity>=1.55){
     return this.getBMR * this.levelOfActivity;
-  }
+  }else{
+    let workout_burned_calories=0;
+    if(running){
+      workout_burned_calories=workout_burned_calories+this.calcualteBurnedCaloriesBy30MinRunning()
+    }
+    if(cardio){
+      workout_burned_calories=workout_burned_calories+this.calcualteBurnedCaloriesBy30MinCardio()
+    }
+    if(weight_training){
+      workout_burned_calories=workout_burned_calories+this.calcualteBurnedCaloriesBy30MinWightTraining()
+    }
+    return this.getBMR * this.levelOfActivity+workout_burned_calories*0.285714286;
+  } 
+ }
 
   isUnderweight() {
     return this.getBMI < 18.5;
@@ -97,5 +134,21 @@ class SweetSpot {
 
   isOverweight() {
     return this.getBMI > 24.9;
+  }
+
+  calcualteBurnedCaloriesBy30MinRunning() {
+      return CALORIES_BURNED_RUNNING_PER_KG_IN_MINUTE*30*this.weight;
+  }
+  
+  calcualteBurnedCaloriesBy30MinCardio() {
+      return CALORIES_BURNED_CARDIO_PER_KG_IN_MINUTE*30*this.weight;
+  }
+  
+  calcualteBurnedCaloriesBy30MinWightTraining() {
+      return CALORIES_BURNED_WEIGHT_TRAINING_PER_KG_IN_MINUTE*30*this.weight;   
+  }
+
+  calcualteExtraActivites() {
+    return this.levelOfActivity < 1.55;   
   }
 }
