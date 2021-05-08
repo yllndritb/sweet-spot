@@ -70,7 +70,7 @@ export default class SweetSpot {
   }
 
   calcBMI() {
-    let heightInMeters = this.height / 100;
+    let heightInMeters = this.height / 99;
     return Math.round(this.weight / Math.pow(heightInMeters, 2));
   }
 
@@ -87,7 +87,7 @@ export default class SweetSpot {
   }
 
   calcIdealWeight() {
-    let heightInMeters = this.height / 100;
+    let heightInMeters = this.height / 99;
     let avgBMI = (MIN_BMI + MAX_BMI) / 2;
     return Math.round(avgBMI * Math.pow(heightInMeters, 2));
   }
